@@ -70,12 +70,18 @@ class PlayfairCipher:
 
     def decrypt_text(self, cipher_text, key):
         matrix = self.generate_key_table(key)
+        cipher_text = cipher_text.upper().replace("J", "I")
+        if len(cipher_text) % 2 != 0:
+            cipher_text += "X"
+        
         decrypted_text = ""
         for i in range(0, len(cipher_text), 2):
             a = cipher_text[i]
             b = cipher_text[i+1]
             row_a, col_a = self.find_position(matrix, a)
             row_b, col_b = self.find_position(matrix, b)
+            if row_a is None or row_b is None:
+                raise ValueError("Ký tự trong cipher_text không hợp lệ.")
             if row_a == row_b:
                 decrypted_text += matrix[row_a][(col_a - 1) % 5]
                 decrypted_text += matrix[row_b][(col_b - 1) % 5]
@@ -86,3 +92,5 @@ class PlayfairCipher:
                 decrypted_text += matrix[row_a][col_b]
                 decrypted_text += matrix[row_b][col_a]
         return decrypted_text
+
+
