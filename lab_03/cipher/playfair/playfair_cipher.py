@@ -93,4 +93,8 @@ class PlayfairCipher:
                 decrypted_text += matrix[row_b][col_a]
         return decrypted_text
 
+    def get_matrix(self, key):
+        """Trả về ma trận Playfair dựa trên key"""
+        return self.generate_key_table(key)
+
 

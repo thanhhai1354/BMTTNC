@@ -82,6 +82,14 @@ def playfair_decrypt():
     decrypted_text = playfair_cipher.decrypt_text(cipher_text, key)
     return jsonify({'decrypted_message': decrypted_text})
 
+# Thêm endpoint mới trước if __name__ == "__main__":
+@app.route("/api/playfair/matrix", methods=["POST"])
+def playfair_matrix():
+    data = request.json
+    key = data['key']
+    matrix = playfair_cipher.get_matrix(key)
+    return jsonify({'matrix': matrix})
+
 # ------------------- Transposition Cipher ------------------- #
 @app.route("/api/transposition/encrypt", methods=["POST"])
 def transposition_encrypt():
